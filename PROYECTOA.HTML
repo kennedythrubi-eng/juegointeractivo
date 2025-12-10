@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juegos Interactivos</title>
+<style>
+* {margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif;}
+body, html {width:100%;height:100%;background:#0d0d1a;color:white;overflow-x:hidden;}
+.page {display:none;width:100%;min-height:100vh;padding:20px;}
+.page.active {display:block;}
+.home-container, .section-container {max-width:900px;margin:0 auto;text-align:center;padding:20px;}
+.hero-img {width:100%;max-height:250px;object-fit:cover;margin:20px 0;border-radius:12px;}
+.neon-title {font-size:3em;color:#fff;text-shadow:0 0 5px #ff66cc,0 0 10px #cc33ff,0 0 20px #9933ff,0 0 30px #6600cc,0 0 40px #330099;margin-bottom:10px;animation:glow 2s infinite;}
+.neon-sub {font-size:1.2em;color:#ff99ff;text-shadow:0 0 5px #ff99ff,0 0 10px #cc99ff;margin-bottom:30px;animation:glow 2s infinite;}
+.section-title {font-size:2.2em;margin-bottom:20px;text-shadow:0 0 5px #cc33ff,0 0 10px #ff66cc,0 0 20px #9933ff;animation:glow 2s infinite;}
+.btn {display:inline-block;padding:15px 25px;margin:10px;border:none;border-radius:12px;cursor:pointer;font-size:1.2em;font-weight:bold;transition:0.3s all;position:relative;z-index:1;}
+.neon-btn {background: linear-gradient(45deg,#9933ff,#ff66cc,#3399ff);color:white;text-shadow:0 0 5px #fff;box-shadow:0 0 10px #9933ff,0 0 20px #ff66cc,0 0 30px #3399ff;}
+.neon-btn:hover {transform:scale(1.05);box-shadow:0 0 20px #9933ff,0 0 30px #ff66cc,0 0 40px #3399ff;}
+.menu-buttons {display:flex;flex-direction:column;gap:15px;}
+.neon-option {display:flex;align-items:center;justify-content:flex-start;gap:15px;padding-left:20px;font-size:1.3em;background: linear-gradient(135deg,#6600cc,#cc33ff,#ff66cc);box-shadow:0 0 10px #cc33ff,0 0 20px #ff66cc,0 0 30px #9933ff;}
+.neon-option:hover {transform:scale(1.03);}
+.icon {width:30px;height:30px;display:inline-block;}
+.quiz-box {background:#1a0d33;padding:20px;border-radius:12px;box-shadow:0 0 20px #6600cc;margin:20px auto;max-width:700px;}
+.question {font-size:1.5em;margin-bottom:20px;text-align:left;}
+.options {display:flex;flex-direction:column;gap:12px;}
+.options button {padding:12px;border-radius:8px;border:none;cursor:pointer;background:#330066;color:white;font-size:1.1em;transition:0.2s;text-align:left;}
+.options button:hover {transform:scale(1.02);box-shadow:0 0 10px #ff66cc,0 0 15px #9933ff;}
+.options button.correct {background:#00ff99;box-shadow:0 0 10px #00ff99;color:black;}
+.options button.wrong {background:#ff3366;box-shadow:0 0 10px #ff3366;color:white;}
+.feedback {margin-top:10px;font-weight:bold;font-size:1.1em;}
+.next-btn {background: linear-gradient(45deg,#ff33cc,#9933ff,#3399ff);color:white;font-weight:bold;text-shadow:0 0 5px #fff;margin-top:15px;width:100%;}
+.score-box {font-size:2em;padding:20px;background:linear-gradient(45deg,#6600cc,#ff33cc,#3399ff);border-radius:12px;box-shadow:0 0 20px #cc33ff;}
+.progress-container {background:#330066;border-radius:12px;width:100%;height:20px;margin-bottom:20px;}
+.progress-bar {height:100%;width:0%;background:linear-gradient(90deg,#ff66cc,#3399ff);border-radius:12px;transition:width 0.3s;}
+#banner {width:100%;height:150px;border-radius:12px;margin-bottom:20px;background: linear-gradient(135deg,#9933ff,#ff66cc,#3399ff);box-shadow:0 0 15px #ff66cc,0 0 30px #3399ff;}
+.home-return {margin-top:20px;}
+@keyframes glow {0%,100%{text-shadow:0 0 5px #ff66cc,0 0 10px #9933ff,0 0 20px #3399ff;}50%{text-shadow:0 0 10px #ff66cc,0 0 20px #9933ff,0 0 30px #3399ff;}}
+@media (max-width:768px){.menu-buttons{flex-direction:column;}.options button{font-size:1em;}.neon-title{font-size:2.2em;}}
+</style>
+</head>
+<body>
+<div id="home" class="page active">
+<div class="home-container">
+<div class="neon-title">Juegos Interactivos</div>
+<div class="neon-sub">REALIZADO: MUÑIZ ESCUDERO KELLY ARIADNE</div>
+<div class="neon-sub">GRUPO: 1IM13</div>
+<button class="btn neon-btn" onclick="showInstructions()">Instrucciones</button>
+<div class="menu-buttons">
+<button class="btn menu neon-option" onclick="startUnit(0)"><span class="icon"></span>Expresión Oral y Escrita</button>
+<button class="btn menu neon-option" onclick="startUnit(1)"><span class="icon"></span>Desarrollo Personal</button>
+<button class="btn menu neon-option" onclick="startUnit(2)"><span class="icon"></span>Orientación Juvenil y Profesional</button>
+</div>
+</div>
+</div>
+
+<div id="instructions" class="page">
+<div class="section-container">
+<h1 class="section-title">Instrucciones</h1>
+<p class="instr-text">
+Cada unidad contiene 20 preguntas.<br>
+Responde con atención.<br>
+¡Aprende mientras te diviertes!
+</p>
+<button class="btn neon-btn" onclick="goHome()">Regresar al inicio</button>
+</div>
+</div>
+
+<div id="quizPage" class="page">
+<div class="section-container">
+<div id="banner"></div>
+<h1 id="unitTitle" class="section-title"></h1>
+<div class="progress-container">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+<div class="quiz-box">
+<div id="questionText" class="question"></div>
+<img id="questionImg" src="" alt="" style="max-width:100%;border-radius:12px;margin-bottom:15px;">
+<div id="optionsBox" class="options"></div>
+<div id="feedback" class="feedback"></div>
+<button class="btn next-btn" id="nextBtn" onclick="nextQuestion()">Siguiente</button>
+</div>
+<button class="btn neon-btn home-return" onclick="goHome()">Regresar al inicio</button>
+</div>
+</div>
+
+<div id="resultPage" class="page">
+<div class="section-container">
+<h1 class="section-title">Resultados</h1>
+<div id="score" class="score-box"></div>
+<button class="btn neon-btn" onclick="goHome()">Regresar al inicio</button>
+</div>
+</div>
+
+<audio id="backgroundMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" loop></audio>
+<audio id="correctSound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3"></audio>
+<audio id="wrongSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<script>
+// Variables
+let currentUnit=0, currentQuestion=0, score=[0,0,0];
+let units=["Expresión Oral y Escrita","Desarrollo Personal","Orientación Juvenil y Profesional"];
+
+// Función para mezclar arrays
+function shuffleArray(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+/// --- Preguntas por unidad (20 cada una) con imágenes únicas ---
+let questions = [
+  // Unidad 1: Expresión oral y escrita
+  [
+    {question:"Función principal de un discurso persuasivo?",options:["Convencer al público","Informar","Contar historias","Describir un objeto"],answer:0,explanation:"Busca influir en las ideas o actitudes del público.",img:"https://source.unsplash.com/400x250/?public-speaking"},
+    {question:"Elementos de un ensayo argumentativo?",options:["Tesis, argumentos y conclusión","Lista de hechos","Solo opinión","Resumen"],answer:0,explanation:"La tesis y los argumentos sostienen la posición y se cierra con conclusión.",img:"https://source.unsplash.com/400x250/?essay-writing"},
+    {question:"¿Qué es la coherencia en un texto?",options:["Conexión lógica entre ideas","Ortografía correcta","Usar muchas palabras difíciles","Repetir frases"],answer:0,explanation:"Las ideas deben relacionarse de manera lógica y fluida.",img:"https://source.unsplash.com/400x250/?writing-logic"},
+    {question:"¿Qué es la cohesión en un texto?",options:["Unión clara entre párrafos","Título atractivo","Cantidad de páginas","Ilustraciones"],answer:0,explanation:"Se refiere a cómo se enlazan las ideas y oraciones entre sí.",img:"https://source.unsplash.com/400x250/?text-writing"},
+    {question:"Tipo de texto que narra hechos reales?",options:["Narrativo","Expositivo","Argumentativo","Instructivo"],answer:0,explanation:"Relata sucesos reales siguiendo un orden cronológico.",img:"https://source.unsplash.com/400x250/?storytelling"},
+    {question:"Objetivo de un texto expositivo?",options:["Informar o explicar","Convencer al lector","Contar una historia","Dar instrucciones"],answer:0,explanation:"Su función es transmitir información clara y objetiva.",img:"https://source.unsplash.com/400x250/?information-text"},
+    {question:"Qué es la paráfrasis?",options:["Reescribir con tus palabras","Copiar texto","Hacer un resumen literal","Inventar información"],answer:0,explanation:"Consiste en expresar la misma idea con palabras propias.",img:"https://source.unsplash.com/400x250/?paraphrase"},
+    {question:"Cuál es la función de un resumen?",options:["Sintetizar información","Confundir al lector","Repetir todo el texto","Escribir opiniones"],answer:0,explanation:"Presenta lo esencial de manera breve y clara.",img:"https://source.unsplash.com/400x250/?summary"},
+    {question:"Qué caracteriza al estilo formal?",options:["Uso de lenguaje culto y preciso","Uso de jerga","Palabras cortas y simples","Emojis"],answer:0,explanation:"Se emplea vocabulario adecuado y estructuras correctas.",img:"https://source.unsplash.com/400x250/?formal-writing"},
+    {question:"Qué caracteriza al estilo informal?",options:["Lenguaje cercano y coloquial","Vocabulario técnico","Textos científicos","Lenguaje legal"],answer:0,explanation:"Se usa un tono cotidiano y cercano al lector.",img:"https://source.unsplash.com/400x250/?informal-writing"},
+    {question:"Cuál es la estructura básica de un ensayo?",options:["Introducción, desarrollo y conclusión","Inicio y fin","Sólo desarrollo","Resumen y opinión"],answer:0,explanation:"Permite organizar ideas de forma clara y lógica.",img:"https://source.unsplash.com/400x250/?essay-structure"},
+    {question:"Qué es una oración temática?",options:["Presenta la idea principal de un párrafo","Es una pregunta","Es la última oración","Frase sin sentido"],answer:0,explanation:"Resume el contenido del párrafo y guía al lector.",img:"https://source.unsplash.com/400x250/?topic-sentence"},
+    {question:"Qué es un conector lógico?",options:["Palabra que une ideas","Una imagen","Un título","Un párrafo"],answer:0,explanation:"Sirve para relacionar ideas dentro de un texto.",img:"https://source.unsplash.com/400x250/?logical-connector"},
+    {question:"Qué es la revisión ortográfica?",options:["Corregir errores de escritura","Escribir más rápido","Hacer resumen","Contar palabras"],answer:0,explanation:"Asegura que el texto esté correctamente escrito.",img:"https://source.unsplash.com/400x250/?spelling"},
+    {question:"Qué es un argumento?",options:["Razón que apoya una idea","Una pregunta","Una ilustración","Un título"],answer:0,explanation:"Sustenta la tesis o idea principal en un texto.",img:"https://source.unsplash.com/400x250/?argument"},
+    {question:"Qué es la introducción de un texto?",options:["Presenta el tema y objetivo","Conclusión","Resumen final","Lista de palabras"],answer:0,explanation:"Da contexto y prepara al lector sobre lo que sigue.",img:"https://source.unsplash.com/400x250/?introduction-text"},
+    {question:"Qué es la conclusión de un texto?",options:["Cierra y resume ideas principales","Empieza el texto","Introduce tema","Es un ejemplo"],answer:0,explanation:"Sintetiza y da cierre al contenido tratado.",img:"https://source.unsplash.com/400x250/?conclusion-text"},
+    {question:"Qué es la argumentación?",options:["Defender una idea con razones","Narrar un cuento","Describir un lugar","Dar instrucciones"],answer:0,explanation:"Se utiliza para persuadir o justificar un punto de vista.",img:"https://source.unsplash.com/400x250/?argumentation"},
+    {question:"Qué es la descripción objetiva?",options:["Mostrar hechos sin opinión","Expresar emociones","Contar historia personal","Dar consejos"],answer:0,explanation:"Se limita a hechos verificables, sin interpretación personal.",img:"https://source.unsplash.com/400x250/?objective-description"},
+    {question:"Qué es la descripción subjetiva?",options:["Expresar opiniones y sentimientos","Listar datos","Narrar historia","Hacer resumen"],answer:0,explanation:"Incluye percepciones, emociones y puntos de vista personales.",img:"https://source.unsplash.com/400x250/?subjective-description"}
+  ],
+
+  // Unidad 2: Desarrollo personal
+  [
+    {question:"Qué es la autoestima?",options:["Valoración que tenemos de nosotros mismos","Habilidad para estudiar","Capacidad de liderar","Tener muchos amigos"],answer:0,explanation:"Es la percepción y valoración que tenemos de nuestra propia valía.",img:"https://source.unsplash.com/400x250/?self-esteem"},
+    {question:"Qué es la resiliencia?",options:["Capacidad de superar adversidades","Habilidad de dibujar","Saber mucho de historia","Hacer ejercicio"],answer:0,explanation:"Es la capacidad de adaptarse y superar situaciones difíciles.",img:"https://source.unsplash.com/400x250/?resilience"},
+    {question:"Qué es la empatía?",options:["Ponerse en el lugar del otro","Saber matemáticas","Ser extrovertido","Tener buena memoria"],answer:0,explanation:"Es comprender y sentir lo que otra persona experimenta.",img:"https://source.unsplash.com/400x250/?empathy"},
+    {question:"Qué es la inteligencia emocional?",options:["Reconocer y manejar emociones propias y ajenas","Saber dibujar","Hacer cálculos rápido","Tener fuerza física"],answer:0,explanation:"Implica identificar, comprender y regular emociones.",img:"https://source.unsplash.com/400x250/?emotional-intelligence"},
+    {question:"Qué es la asertividad?",options:["Expresar opiniones respetando a los demás","Gritar siempre","Decir siempre que sí","Ignorar a otros"],answer:0,explanation:"Comunicar de manera clara y respetuosa lo que se piensa o siente.",img:"https://source.unsplash.com/400x250/?assertiveness"},
+    {question:"Qué es la procrastinación?",options:["Postergar tareas importantes","Trabajar rápido","Saber priorizar","Organizar horarios"],answer:0,explanation:"Es dejar para después lo que se debería hacer ahora.",img:"https://source.unsplash.com/400x250/?procrastination"},
+    {question:"Qué es la motivación intrínseca?",options:["Motivación interna basada en satisfacción personal","Premio externo","Competir con otros","Hacerlo por obligación"],answer:0,explanation:"Se realiza por interés o disfrute propio, no por recompensa externa.",img:"https://source.unsplash.com/400x250/?intrinsic-motivation"},
+    {question:"Qué es la motivación extrínseca?",options:["Hacer algo por recompensa externa","Hacer algo por gusto","Aprender por curiosidad","Estudiar por pasión"],answer:0,explanation:"Se realiza para obtener un beneficio o evitar un castigo externo.",img:"https://source.unsplash.com/400x250/?extrinsic-motivation"},
+    {question:"Qué es la gestión del tiempo?",options:["Organizar y administrar las actividades","Dormir mucho","Olvidar tareas","Ser desordenado"],answer:0,explanation:"Planificar y distribuir el tiempo de forma efectiva.",img:"https://source.unsplash.com/400x250/?time-management"},
+    {question:"Qué es la autoconfianza?",options:["Creer en nuestras capacidades","Ser arrogante","Depender de otros","Tener muchos amigos"],answer:0,explanation:"Es confiar en las propias habilidades y decisiones.",img:"https://source.unsplash.com/400x250/?self-confidence"},
+    {question:"Qué es el trabajo en equipo?",options:["Colaborar con otros para un objetivo común","Hacer todo solo","Competir con compañeros","Ignorar a otros"],answer:0,explanation:"Unir esfuerzos y habilidades para lograr un objetivo compartido.",img:"https://source.unsplash.com/400x250/?teamwork"},
+    {question:"Qué es la comunicación efectiva?",options:["Transmitir ideas de manera clara y comprensible","Hablar sin escuchar","Gritar para que todos entiendan","Escribir sin revisar"],answer:0,explanation:"El mensaje llega correctamente y se entiende según la intención.",img:"https://source.unsplash.com/400x250/?communication"},
+    {question:"Qué es la resolución de conflictos?",options:["Encontrar soluciones pacíficas ante desacuerdos","Evitar problemas","Ignorar discusiones","Pelear"],answer:0,explanation:"Buscar acuerdos y soluciones sin confrontación destructiva.",img:"https://source.unsplash.com/400x250/?conflict-resolution"},
+    {question:"Qué es la autocrítica constructiva?",options:["Analizar errores para mejorar","Criticarse sin motivo","Compararse con otros","Ignorar errores"],answer:0,explanation:"Valorar nuestros errores y aprender de ellos para crecer.",img:"https://source.unsplash.com/400x250/?self-reflection"},
+    {question:"Qué es la planificación personal?",options:["Organizar metas y actividades personales","Dejar todo al azar","Depender de otros","No tener horarios"],answer:0,explanation:"Definir objetivos y estrategias para alcanzarlos efectivamente.",img:"https://source.unsplash.com/400x250/?planning"},
+    {question:"Qué es la tolerancia?",options:["Aceptar y respetar diferencias","Ser indiferente","Evitar a otros","Criticar constantemente"],answer:0,explanation:"Respeto y aceptación de ideas, opiniones y comportamientos distintos.",img:"https://source.unsplash.com/400x250/?tolerance"},
+    {question:"Qué es la automotivación?",options:["Impulsarse a actuar sin necesidad de presión externa","Esperar órdenes","Depender de recompensas","Hacer solo lo que otros dicen"],answer:0,explanation:"Capacidad de iniciarse y persistir en acciones por interés propio.",img:"https://source.unsplash.com/400x250/?self-motivation"},
+    {question:"Qué es la adaptabilidad?",options:["Ajustarse a cambios y nuevas situaciones","Resistirse al cambio","Quedarse siempre igual","Evitar retos"],answer:0,explanation:"Capacidad de ajustarse a nuevas circunstancias y aprender de ellas.",img:"https://source.unsplash.com/400x250/?adaptability"},
+    {question:"Qué es la gestión emocional?",options:["Controlar y regular emociones propias","Ignorar sentimientos","Expresar emociones sin filtro","Dejar que otros decidan"],answer:0,explanation:"Manejar emociones para reaccionar de manera adecuada a situaciones.",img:"https://source.unsplash.com/400x250/?emotions"},
+    {question:"Qué es el liderazgo positivo?",options:["Influir y motivar de manera ética y constructiva","Mandar sin escuchar","Imponer decisiones","Criticar compañeros"],answer:0,explanation:"Guiar y motivar a otros fomentando respeto y cooperación.",img:"https://source.unsplash.com/400x250/?leadership"}
+  ],
+
+  // Unidad 3: Orientación
+  [
+    {question:"Qué es la orientación profesional?",options:["Asesoramiento sobre carreras y estudios","Hacer amigos","Ganar dinero rápido","Trabajar sin plan"],answer:0,explanation:"Ayuda a tomar decisiones sobre educación y carrera según habilidades e intereses.",img:"https://source.unsplash.com/400x250/?career-guidance"},
+    {question:"Qué es el autoconocimiento?",options:["Conocer nuestras habilidades y gustos","Saber solo sobre otros","Copiar a compañeros","Hacer lo que otros decidan"],answer:0,explanation:"Reconocer fortalezas, debilidades y preferencias personales.",img:"https://source.unsplash.com/400x250/?self-knowledge"},
+    {question:"Qué es el mercado laboral?",options:["Espacio de oferta y demanda de empleo","Un juego","Una escuela","Una red social"],answer:0,explanation:"Entorno donde se ofrecen y solicitan empleos y talentos.",img:"https://source.unsplash.com/400x250/?job-market"},
+    {question:"Qué es la educación continua?",options:["Aprender durante toda la vida","Solo ir a la escuela","Dejar de estudiar","Leer solo por diversión"],answer:0,explanation:"Seguir capacitándose y actualizándose constantemente.",img:"https://source.unsplash.com/400x250/?lifelong-learning"},
+    {question:"Qué es un CV?",options:["Currículum Vitae","Un club de amigos","Una beca","Un título universitario"],answer:0,explanation:"Documento que resume experiencia laboral y académica.",img:"https://source.unsplash.com/400x250/?resume"},
+    {question:"Qué es la entrevista laboral?",options:["Proceso para evaluar candidatos a un empleo","Una fiesta","Una prueba de deportes","Un examen de matemáticas"],answer:0,explanation:"Permite conocer habilidades, experiencia y personalidad del postulante.",img:"https://source.unsplash.com/400x250/?job-interview"},
+    {question:"Qué es la orientación vocacional?",options:["Identificar intereses y aptitudes para elegir carrera","Tomar decisiones al azar","Copiar a otros","Seguir a amigos"],answer:0,explanation:"Ayuda a elegir la profesión que se ajusta a tus capacidades e intereses.",img:"https://source.unsplash.com/400x250/?vocational-guidance"},
+    {question:"Qué es la planificación profesional?",options:["Establecer metas y estrategias de carrera","Dejar todo al azar","Esperar que otros decidan","Trabajar sin rumbo"],answer:0,explanation:"Organizar pasos concretos para alcanzar objetivos profesionales.",img:"https://source.unsplash.com/400x250/?career-planning"},
+    {question:"Qué es la ética profesional?",options:["Conducta correcta en el trabajo","Hacer trampa","No respetar reglas","Solo ganar dinero"],answer:0,explanation:"Aplicar valores y normas en el ámbito laboral.",img:"https://source.unsplash.com/400x250/?professional-ethics"},
+    {question:"Qué es la experiencia laboral?",options:["Trabajos previos que fortalecen habilidades","Solo ir a la escuela","Hacer tareas en casa","Hacer amigos"],answer:0,explanation:"Aprendizajes adquiridos mediante empleo o prácticas.",img:"https://source.unsplash.com/400x250/?work-experience"},
+    {question:"Qué es la formación académica?",options:["Estudios y capacitaciones recibidas","Aprender solo de amigos","Hacer hobbies","Ir al cine"],answer:0,explanation:"Conjunto de estudios que preparan para la vida profesional.",img:"https://source.unsplash.com/400x250/?education"},
+    {question:"Qué es la toma de decisiones?",options:["Elegir la mejor opción según información y valores","Dejar que otros decidan","Hacer lo primero que pase","Ignorar opciones"],answer:0,explanation:"Analizar alternativas y escoger la más adecuada.",img:"https://source.unsplash.com/400x250/?decision-making"},
+    {question:"Qué es el networking?",options:["Crear y mantener relaciones profesionales","Hacer fiestas","Salir solo","Ignorar contactos"],answer:0,explanation:"Red de contactos para oportunidades laborales y aprendizaje.",img:"https://source.unsplash.com/400x250/?networking"},
+    {question:"Qué es la orientación académica?",options:["Asesoramiento sobre cursos y estudios","Tomar decisiones al azar","Dejar que otros decidan","Aprender solo de amigos"],answer:0,explanation:"Guía sobre opciones educativas y rutas de aprendizaje.",img:"https://source.unsplash.com/400x250/?academic-guidance"},
+    {question:"Qué es el desarrollo profesional?",options:["Mejorar habilidades y competencias laborales","Quedarse igual","Ignorar formación","Aprender solo hobbies"],answer:0,explanation:"Crecimiento y mejora continua en la carrera profesional.",img:"https://source.unsplash.com/400x250/?professional-development"},
+    {question:"Qué es la capacitación laboral?",options:["Entrenamiento para adquirir habilidades específicas","Jugar videojuegos","Dormir mucho","Ignorar tareas"],answer:0,explanation:"Aprender y mejorar competencias necesarias en el trabajo.",img:"https://source.unsplash.com/400x250/?job-training"},
+    {question:"Qué es la orientación financiera?",options:["Aprender a manejar dinero responsablemente","Comprar sin control","Ahorrar nada","Prestar sin pensar"],answer:0,explanation:"Administración y planificación adecuada de recursos económicos.",img:"https://source.unsplash.com/400x250/?financial-guidance"},
+    {question:"Qué es la ética personal?",options:["Aplicar valores en la vida diaria","Hacer todo sin pensar","Ignorar normas","Copiar a otros"],answer:0,explanation:"Tomar decisiones correctas basadas en principios morales.",img:"https://source.unsplash.com/400x250/?personal-ethics"},
+    {question:"Qué es el emprendimiento?",options:["Crear proyectos o negocios propios","Solo trabajar para otros","Esperar oportunidades","No asumir riesgos"],answer:0,explanation:"Iniciar y gestionar ideas para generar valor o ingresos.",img:"https://source.unsplash.com/400x250/?entrepreneurship"},
+    {question:"Qué es la planificación financiera?",options:["Organizar ingresos y gastos de manera eficiente","Gastar sin control","Dejar que otros manejen dinero","No hacer presupuesto"],answer:0,explanation:"Gestionar recursos económicos para alcanzar objetivos personales o profesionales.",img:"https://source.unsplash.com/400x250/?financial-planning"}
+  ]
+];
+
+
+// --- Mezclar opciones de cada pregunta ---
+questions.forEach(unit=>{
+  unit.forEach(q=>{
+    let correct = q.options[q.answer];
+    let shuffled = shuffleArray([...q.options]);
+    q.answer = shuffled.indexOf(correct);
+    q.options = shuffled;
+  });
+});
+
+// Funciones de navegación
+function showInstructions(){document.getElementById("home").classList.remove("active");document.getElementById("instructions").classList.add("active");}
+function goHome(){document.getElementById("instructions").classList.remove("active");document.getElementById("quizPage").classList.remove("active");document.getElementById("resultPage").classList.remove("active");document.getElementById("home").classList.add("active");let bg=document.getElementById("backgroundMusic");bg.pause();bg.currentTime=0;}
+function startUnit(u){currentUnit=u;currentQuestion=0;score[u]=0;document.getElementById("home").classList.remove("active");document.getElementById("quizPage").classList.add("active");document.getElementById("unitTitle").innerText=units[u];document.getElementById("backgroundMusic").play();showQuestion();}
+function showQuestion(){let q=questions[currentUnit][currentQuestion];document.getElementById("questionText").innerText=q.question;document.getElementById("questionImg").src=q.img;let optionsBox=document.getElementById("optionsBox");optionsBox.innerHTML="";document.getElementById("feedback").innerText="";document.getElementById("nextBtn").style.display="none";q.options.forEach((opt,i)=>{let btn=document.createElement("button");btn.innerText=opt;btn.onclick=()=>checkAnswer(i);optionsBox.appendChild(btn);});updateProgress();}
+function checkAnswer(i){let q=questions[currentUnit][currentQuestion];let btns=document.getElementById("optionsBox").children;for(let j=0;j<btns.length;j++){btns[j].disabled=true;if(j===q.answer){btns[j].classList.add("correct");}else if(j===i){btns[j].classList.add("wrong");}}if(i===q.answer){score[currentUnit]++;document.getElementById("feedback").innerText="¡Correcto! "+q.explanation;document.getElementById("correctSound").play();confetti({particleCount:50,spread:70,origin:{y:0.6}});}else{document.getElementById("feedback").innerText="Incorrecto. "+q.explanation;document.getElementById("wrongSound").play();}document.getElementById("nextBtn").style.display="block";}
+function nextQuestion(){currentQuestion++;if(currentQuestion>=questions[currentUnit].length){document.getElementById("quizPage").classList.remove("active");document.getElementById("resultPage").classList.add("active");document.getElementById("score").innerText="Puntaje: "+score[currentUnit]+"/"+questions[currentUnit].length;}else{showQuestion();}}
+function updateProgress(){let p=((currentQuestion)/questions[currentUnit].length)*100;document.getElementById("progressBar").style.width=p+"%";}
+</script>
+</body>
+</html>
